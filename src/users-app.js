@@ -19,7 +19,6 @@ export const usersApp = async( element )=>{
     buttonNewUser(element);
     renderModal(element, async( userLike )=>{
         const user = await saveUser(userLike);
-        
         userStore.onChangeUser(user);
         renderTable(element);
         

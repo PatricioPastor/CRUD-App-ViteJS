@@ -57,25 +57,32 @@ export const renderModal = ( element, callback )=>{
     //!Form Event
     if ( !form ) form = modal.querySelector('form')
     
+    const Active = form.querySelector("#is-active")
+
     form.addEventListener('submit',async (event)=>{
         event.preventDefault()
 
         const data = new FormData( form )
         const userLike = {...loadedUser}
 
+        
         for (const [key, value] of data) {
+            
+            if(key ==="isActive") continue
+
             if (key === 'balance'){
                 userLike[key] = +value
                 continue
             }
 
-            if (key === 'isActive') {
-                userLike[key] = (value === 'on') ? true : false
-                continue
-            }
-            
             userLike[key] = value
         }
+
+        userLike.isActive = (Active.checked) ? true : false
+        
+
+
+        console.log(userLike)
         await callback(userLike)
 
         form?.reset()

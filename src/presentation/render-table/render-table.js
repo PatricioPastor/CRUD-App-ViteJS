@@ -1,6 +1,7 @@
 import './render-table.css'
 import crudStore from '../../store/crud-store';
 import { changeUser } from '../render-modal/render-modal';
+import { deleteUserById } from '../../use-cases/delete-user';
 
 
 let table;
@@ -30,10 +31,27 @@ const createTable = () => {
 
 const tableSelectListener = (event) => {
     const element = event.target.closest('.select-user')
+    if(!element)return
     const id = element.getAttribute('data-id')
     
     changeUser(id)
 
+
+}
+
+const tableDeleteUser = async (event) => {
+    const element = event.target.closest('.delete-user')
+    if(!element) return 
+    const id = element.getAttribute('data-id')
+    try{
+        await deleteUserById(id);
+        await crudStore.reloadPage(); 
+        document.querySelector('#current-page').innerText = crudStore.getCurrentPage();
+        renderTable()
+    }catch(error){
+        console.log(error)
+        alert(error)
+    }
 
 }
 
@@ -47,6 +65,7 @@ export const renderTable = (element) => {
         element.appendChild(table)
 
         table.addEventListener('click', tableSelectListener)
+        table.addEventListener('click', tableDeleteUser)
     }
 
 
@@ -61,9 +80,9 @@ export const renderTable = (element) => {
                 <td>${user.firstName}</td>
                 <td>${user.lastName}</td>
                 <td>${user.balance}</td>
-                <td>${user.isActive}</td>
+                <td>${(user.isActive) ? "🟢" : "🔴" }</td>
                 <td>
-                    <a href="#" class="select-user" data-id="${user.id}">Select</a>
+                    <a href="#" class="select-user" data-id="${user.id}">Change</a>
                     |
                     <a href="#" class="delete-user" data-id="${user.id}">Delete</a>
                 </td>

@@ -12,9 +12,6 @@ export const getUserById = async ( id )=> {
 
 
     const user = localHostMapperUser(data)
-    
-    console.log(user)
-
     return user
 
 }
