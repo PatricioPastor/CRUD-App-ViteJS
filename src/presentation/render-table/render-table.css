@@ -1,0 +1,22 @@
+table {
+    border-radius: 8px;
+    background: rgba(0,0,0,0.3);
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+th {
+    padding: 4px;
+    background-color: rgba(16, 16, 16, 0.705);
+    margin:300px;
+    border-radius: 8px;
+}
+
+a {
+    color: #b68b00;
+    transition: 1s;
+}
+
+a:hover {
+    color: #f7de1e;
+}
